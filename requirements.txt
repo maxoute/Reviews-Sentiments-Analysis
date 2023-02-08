@@ -1,0 +1,15 @@
+pip install urlextract
+pip install plotl
+pip install transformers
+pip install spacy
+python -m spacy download en_core_web_md
+python -m spacy download en_core_web_lg
+
+pip install GraphiPy
+pip install pyvis
+pip install datasets
+pip install transformers
+pip install nltk
+pip install plotly         
+pip install palettable
+ pip install networkx
