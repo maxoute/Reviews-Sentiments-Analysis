@@ -1,4 +1,5 @@
 mask
+.DS_Store
 results
 __pycache__
 nlp_sa

@@ -1,3 +1,4 @@
+from ast import List
 import model 
 from model import *
 import torch
@@ -32,6 +33,7 @@ class Classifier:
         logging.debug(f'{torch.cuda.device_count()} GPUs are in use')
 
         self.model.eval()
+        
         self.preprocess = get_preprocessor()
 
     def predict(self,
@@ -45,13 +47,17 @@ class Classifier:
         #hypothesis_template = [hypothesis_template] if single_input_flag else hypothesis_template
 
         if not skip_preprocess:
-            text = [self.preprocess(t) for t in text]
+            preprocessor = get_preprocessor()
+            text = [preprocessor(t) for t in text]
+
+            #text = [self.preprocess(t) for t in text]
         assert all(type(t) is str for t in text), text
         batch_size = len(text) if batch_size is None else batch_size
         _index = list(range(0, len(text), batch_size)) + [len(text) + 1]
         probs = []
         with torch.no_grad():
             for i in range(len(_index) - 1):
+                
                 encoded_input = self.tokenizer.batch_encode_plus(
                     text[_index[i]: _index[i+1]],
                     max_length=self.max_length,
@@ -95,6 +101,7 @@ class Sentiment(Classifier):
             model_name = model.MODEL_LIST['sentiment']['multilingual' if multilingual else 'default']
         super().__init__(model_name, max_length=max_length, use_auth_token=use_auth_token)
         self.sentiment = self.predict
+        print(self.sentiment)
         
 class Emotion(Classifier):
 
@@ -103,7 +110,7 @@ class Emotion(Classifier):
                  max_length: int = None,
                  use_auth_token: bool = False):
         if model_name is None:
-            model_name = MODEL_LIST['emotion']['default']
+            model_name = model.MODEL_LIST['emotion']['default']
         super().__init__(model_name, max_length=max_length, use_auth_token=use_auth_token)
         self.emotion = self.predict
         
@@ -114,12 +121,29 @@ class Topic_extract(Classifier):
                  max_length: int = None,
                  use_auth_token: bool = False):
         if model_name is None:
-            model_name = MODEL_LIST['topic']['default']
+            model_name = model.MODEL_LIST['topic']['default']
         super().__init__(model_name, max_length=max_length, use_auth_token=use_auth_token)
         self.Topic_extract = self.predict
 
 
-model_sentiment=Sentiment()
-reviews_test="at first I love it,now i hate it"
+class NLPModels:
+    def __init__(self):
+        self.sentiment_model = Sentiment()
+        #self.emotion_model = Emotion()
+        #self.topic_extract_model = Topic_extract()
 
-print(Sentiment.predict(reviews_test))
+    def predict_sentiment(self, review):
+        return self.sentiment_model.predict(review)
+    
+   # def predict_emotion(self, review):
+      #  return self.emotion_model.predict(review)
+    
+    #def predict_topic(self, review):
+     #   return self.topic_extract_model.predict(review)
+
+nlp_models = NLPModels()
+
+review = "I love this product, but now I hate it."
+print("Sentiment:", nlp_models.predict_sentiment(review))
+print("Emotion:", nlp_models.predict_emotion(review))
+print("Topic:", nlp_models.predict_topic(review))

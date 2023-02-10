@@ -23,7 +23,7 @@ MODEL_LIST = {
     },
     'topic': {
         "default": "cardiffnlp/tweet-topic-21-multi",
-    }
+    }   
 }
 
 
@@ -78,9 +78,21 @@ def load_model(model, task='sequence_classification', use_auth_token=False, retu
     tokenizer_argument = {} if tokenizer_argument is None else tokenizer_argument   
 
     if not no_network:
-        if model not in MODEL_CLASSES:
-            raise ValueError("model not supported")
-        model_class, tokenizer_class = MODEL_CLASSES[model]
+        found = False
+        for task, models in MODEL_LIST.items():
+            for model_name, model_id in models.items():
+                if model == model_id:   
+                    print(f"Model {model} is for task {task} and model_name {model_name}")
+                found = True
+                break
+            if found:
+                break
+        if not found:
+            print(f"Model {model} not found in MODEL_LIST")
+            
+        #if model not in MODEL_LIST:
+            #raise ValueError("model not supported")
+        model_class = MODEL_LIST[task][model_name]
         if use_auth_token and not has_auth_token(model):
             raise ValueError("You don't have authorization to use this model")
         try:
