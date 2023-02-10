@@ -341,6 +341,7 @@ for i, review in enumerate(reviews):
     data_reviews.at[i, "fear_probability_emotion"] = prediction["probability"]["fear"]
 
 
+data_reviews.to_csv('Result_final.csv', index=False)
 
 
 
