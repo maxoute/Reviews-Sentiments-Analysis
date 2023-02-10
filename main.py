@@ -341,7 +341,7 @@ for i, review in enumerate(reviews):
     data_reviews.at[i, "fear_probability_emotion"] = prediction["probability"]["fear"]
 
 
-data_reviews.to_csv('Result_final.csv', index=False)
+data_reviews.to_csv('results/Result_final.csv', index=False)
 
 
 
@@ -349,7 +349,7 @@ data_reviews_positive=data_reviews[data_reviews['label_sentiment']=='positive'].
 data_reviews_neutral = data_reviews[data_reviews['label_sentiment']=='neutral'].dropna(subset=["review_ST"])
 data_reviews_negative = data_reviews[data_reviews['label_sentiment']=='negative'].dropna(subset=["review_ST"])
 
-data_reviews_positive
+data_reviews_positive.to_csv('results/Result_final_Positive.csv', index=False)
 
 #  **COMMON WORDS ALL**
 
@@ -358,6 +358,7 @@ top = Counter([item for sublist in data_reviews['temp_list'] for item in sublist
 data_common_words = pd.DataFrame(top.most_common(20))
 data_common_words.columns = ['Common_words','count']
 data_common_words.style.background_gradient(cmap='Blues')
+data_common_words.to_csv('results/Result_final_Common_Word.csv', index=False)
 
 #data_common_words.head()
 
