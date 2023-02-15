@@ -2,8 +2,10 @@ import matplotlib.pyplot as plt
 from wordcloud import ImageColorGenerator, WordCloud, STOPWORDS
 import pandas as pd
 
+from collections import Counter
 
-def words_unique(label_sentiment,numwords,raw_words,data_reviews ):
+
+def words_unique(label_sentiment,numwords,data_reviews ):
     '''
     Input:
         segment - Segment category (ex. 'Neutral');
@@ -12,6 +14,15 @@ def words_unique(label_sentiment,numwords,raw_words,data_reviews ):
     Output: 
         dataframe giving information about the name of the specific ingredient and how many times it occurs in the chosen cuisine (in descending order based on their counts)..
     '''
+    
+    # transform the review ' i like flowers' into list of words ['i','like','flowers']
+    data_reviews['review_ST'] = data_reviews['review_ST'].str.split()
+    
+    # Gather all the reviews in the list format into a big list
+    raw_text = [word for word_list in data_reviews['review_ST'] for word in word_list]
+
+
+    
     allother = []
     for item in data_reviews[data_reviews.label_sentiment != label_sentiment]['review_ST']:
         for word in item:

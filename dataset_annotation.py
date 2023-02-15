@@ -20,6 +20,8 @@ class Dataset_anotation():
         self.data_reviews = pd.read_csv(csv_path)
     
     def preprocessing_data(self):
+        
+        
         list_stopwords = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself",
                   "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its",
                   "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom"
@@ -44,7 +46,12 @@ class Dataset_anotation():
         self.reviews_clean = self.data_reviews['review_ST']
         
         
-    def annotation_sentiment(self):
+    def annotation_sentiment(self, csv_path):
+        
+        self.read_csv(csv_path)
+        self.preprocessing_data()
+        
+        
         """ we are adding 4 more columns to the original dataset, 
         label sentiment, the proba of positive, negative and neutral then we are filling thooses columns"""
         
@@ -60,7 +67,11 @@ class Dataset_anotation():
             self.data_reviews.at[i, "neutral_probability_sentiment"] = prediction["probability"]["neutral"]
             self.data_reviews.at[i, "positive_probability_sentiment"] = prediction["probability"]["positive"]
             
-    def annotation_emotion(self):
+    def annotation_emotion(self, csv_path):
+        
+        self.read_csv(csv_path)
+        self.preprocessing_data()
+
 
         self.data_reviews["label_emotion"] = ""
         self.data_reviews["joy_probability_emotion"] = ""
