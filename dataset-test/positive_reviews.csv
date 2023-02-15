@@ -1,0 +1,9 @@
+review,date,source,review_ST,label_sentiment,negative_probability_sentiment,neutral_probability_sentiment,positive_probability_sentiment
+I fucking love baquette,12-05-2022,twitter,fucking love baquette,positive,0.0449422225356102,0.09039894491434097,0.8646588325500488
+"The bread is amazing, it's always fresh and delicious!",12-07-2012,google map,bread amazing  s always fresh delicious ,positive,0.003463367698714137,0.011600513011217117,0.9849360585212708
+"I love the croissants, they're so flaky and buttery!",12-07-2012,facebook,love croissants  re flaky buttery ,positive,0.003756839781999588,0.01882735826075077,0.9774158596992493
+"The pastries are a bit too sweet for my taste, but still good.",12-07-2012,google map,pastries bit sweet taste  still good ,positive,0.0027200153563171625,0.0680619552731514,0.929218053817749
+"The sandwiches are great, I love the variety of fillings.",12-07-2012,twitter,sandwiches great  love variety fillings ,positive,0.0027341581881046295,0.010495572350919247,0.9867702722549438
+"The cakes are beautiful and tasty, perfect for special occasions.",12-07-2012,facebook,cakes beautiful tasty  perfect special occasions ,positive,0.0025813246611505747,0.018311627209186554,0.9791070222854614
+"The service is friendly and fast, I always enjoy coming here.",12-07-2012,google map,service friendly fast  always enjoy coming ,positive,0.004854439292103052,0.025269677862524986,0.9698759317398071
+"The bread is always fresh, but I wish they had more gluten-free options.",12-07-2012,facebook,bread always fresh  wish gluten-free options ,positive,0.005713338032364845,0.15638506412506104,0.8379015922546387

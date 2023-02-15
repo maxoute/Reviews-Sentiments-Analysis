@@ -1,0 +1,3 @@
+review,date,source,review_ST,label_sentiment,negative_probability_sentiment,neutral_probability_sentiment,positive_probability_sentiment
+"At first I love it, now I hate it",12-05-2012,facebook,first love  hate,negative,0.5839802622795105,0.3806350827217102,0.03538469225168228
+💩,12-07-2012,google map,💩,negative,0.7112584114074707,0.23126883804798126,0.057472750544548035

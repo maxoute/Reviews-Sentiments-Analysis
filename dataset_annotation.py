@@ -1,8 +1,4 @@
 import pandas as pd 
-import csv
-import re
-import string
-
 import nltk
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -11,10 +7,6 @@ nltk.download('vader_lexicon')
 nltk.download('wordnet')
 
 from nltk.tokenize import word_tokenize
-from collections import Counter
-from nltk.corpus import stopwords
-from wordcloud import ImageColorGenerator, WordCloud, STOPWORDS
-from nltk.corpus import wordnet
 from data_cleaning import clean_text
 from model import Emotion, Sentiment, Topic_extract
 
@@ -28,14 +20,24 @@ class Dataset_anotation():
         self.data_reviews = pd.read_csv(csv_path)
     
     def preprocessing_data(self):
-        self.data_reviews.dropna(subset=["review"], inplace=True)
-        stop_words = set(stopwords.words("english")) #+ list(string.punctuation)
-        
+        list_stopwords = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself",
+                  "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its",
+                  "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom"
+                  "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being",
+                  "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but",
+                  "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against",
+                  "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up",
+                  "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here",
+                  "there", "when", "where", "why", "how", "all", "any", "both", "each", "more", "most",
+                  "other", "some", "such", "nor", "only", "own", "same", "so", "too",
+                  "very", "s", "t", "can", "will", "just", "don", "should", "now", "'s","'re", "'m" , "'ve"]
+
+        self.data_reviews.dropna(subset=["review"], inplace=True)        
         self.reviews = self.data_reviews['review']
 
         for i, review in enumerate(self.reviews):
             words = word_tokenize(review)
-            words = [word for word in words if word.lower() not in stop_words]
+            words = [word for word in words if word.lower() not in list_stopwords]
             self.data_reviews.at[i, "review_ST"] = " ".join(words)
 
         self.data_reviews['review_ST'] = self.data_reviews['review_ST'].apply(clean_text)
