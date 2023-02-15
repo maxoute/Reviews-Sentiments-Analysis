@@ -47,35 +47,6 @@ data_reviews = dataset_anotator.data_reviews
 
 common_words = common_words_extract.common_words_counter(data_reviews)
 
-
-
-
-# **WORD GRAPH**
-data_reviews['review_ST'] = data_reviews['review_ST'].apply(lambda x: ' '.join(x))
-print("data_reviews['review_ST'] ", data_reviews['review_ST'] )
-
-article = ' '.join(data_reviews['review_ST'])
-doc = nlp(article)
-
-print('--- doc ---', doc)
-
-text_list = []
-head_list = []
-
-for token in doc:
-    if token.is_alpha:
-        if not token.is_stop:
-            text_list.append(token.lemma_)
-            head_list.append(token.head.text.lower())
-
-df = pd.DataFrame(list(zip(text_list, head_list)), 
-               columns =['text', 'head'])
-
-combos = df.groupby(['text','head']).size().reset_index().rename(columns={0:'count'}).sort_values('count', ascending=False)
-
-print('--- combo ---', combos)
-
-combos.to_csv('results/test.csv', index=False)
-
+print('common_words',common_words)
 
 
