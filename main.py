@@ -5,6 +5,10 @@ from dataset_annotation import Dataset_anotation
 from common_word_extraction import Common_word_extractor
 from text_network import TextNetwork
 from synonyms_extraction import Synonyms_extarction
+import spacy
+nlp = spacy.load("en_core_web_lg")  
+
+
 
 dataset_anotator = Dataset_anotation()
 
@@ -87,5 +91,5 @@ tn.draw_network()
 
 
 
-syn = Synonyms(data_reviews)
+syn = Synonyms_extarction(data_reviews)
 synonyms = syn.tokenize_text('review_ST')
