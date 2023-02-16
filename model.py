@@ -5,22 +5,12 @@ from urlextract import URLExtract # type: ignore
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, AutoModelForTokenClassification, AutoConfig,\
     AutoModelForMaskedLM
 import re
-
 import logging
 from typing import List, Dict
-
 import torch
-
-
 from palettable.colorbrewer.qualitative import Pastel1_7
-
-
 import spacy
-
 nlp = spacy.load("en_core_web_lg")  
-
-
-
 
 def get_preprocessor(processor_type: str = None):
     url_ex = URLExtract()
