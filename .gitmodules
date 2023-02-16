@@ -1,0 +1,3 @@
+[submodule "list_models/emotion-english-distilroberta-base"]
+	path = list_models/emotion-english-distilroberta-base
+	url = https://huggingface.co/j-hartmann/emotion-english-distilroberta-base
