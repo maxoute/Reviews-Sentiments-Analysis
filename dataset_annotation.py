@@ -1,10 +1,10 @@
 import pandas as pd 
-import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordcloud')
-nltk.download('vader_lexicon')
-nltk.download('wordnet')
+# import nltk
+# nltk.download('punkt')
+# nltk.download('stopwords')
+# nltk.download('wordcloud')
+# nltk.download('vader_lexicon')
+# nltk.download('wordnet')
 
 from nltk.tokenize import word_tokenize
 from data_cleaning import clean_text

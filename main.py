@@ -49,4 +49,12 @@ common_words = common_words_extract.common_words_counter(data_reviews)
 
 print('common_words',common_words)
 
+test, text = synonym_extractor.find_synonyms_dataset(data_reviews)
 
+
+
+print('text :\n', text)
+test = synonym_extractor.return_synonym_one_word(str('computer'))
+
+
+print(test)
