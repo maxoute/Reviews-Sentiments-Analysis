@@ -58,3 +58,5 @@ test = synonym_extractor.return_synonym_one_word(str('computer'))
 
 
 print(test)
+
+print('data_reviews.columns', data_reviews.columns)

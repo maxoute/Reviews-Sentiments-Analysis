@@ -46,10 +46,13 @@ class Dataset_anotation():
         self.reviews_clean = self.data_reviews['review_ST']
         
         
-    def annotation_sentiment(self, csv_path):
+    def annotation_sentiment(self, data_reviews = None,  csv_path = 'null' ):
         
-        self.read_csv(csv_path)
-        self.preprocessing_data()
+        if csv_path=='null':
+            self.data_reviews = data_reviews
+        else:
+            self.read_csv(csv_path)
+            self.preprocessing_data()
         
         
         """ we are adding 4 more columns to the original dataset, 
@@ -67,11 +70,13 @@ class Dataset_anotation():
             self.data_reviews.at[i, "neutral_probability_sentiment"] = prediction["probability"]["neutral"]
             self.data_reviews.at[i, "positive_probability_sentiment"] = prediction["probability"]["positive"]
             
-    def annotation_emotion(self, csv_path):
+    def annotation_emotion(self, data_reviews = None,  csv_path = 'null' ):
         
-        self.read_csv(csv_path)
-        self.preprocessing_data()
-
+        if csv_path=='null':
+            self.data_reviews = data_reviews
+        else:
+            self.read_csv(csv_path)
+            self.preprocessing_data()
 
         self.data_reviews["label_emotion"] = ""
         self.data_reviews["joy_probability_emotion"] = ""
@@ -96,6 +101,12 @@ class Dataset_anotation():
         dataframe.to_csv(path, index=False)
     
     def filter_sentiment(self, sentiment):
+        
+        if self.data_reviews[self.data_reviews['label_sentiment'].isin('sentiment')]:
+            data_reviews_filtered=self.data_reviews[self.data_reviews['label_sentiment']==sentiment].dropna(subset=["review_ST"])
+        return data_reviews_filtered
 
-        data_reviews_filtered=self.data_reviews[self.data_reviews['label_sentiment']==sentiment].dropna(subset=["review_ST"])
+    def filter_filter_emotion(self, emotion):
+        if self.data_reviews[self.data_reviews['self.data_reviews'].isin('sentiment')]:
+            data_reviews_filtered=self.data_reviews[self.data_reviews['label_emotion']==emotion].dropna(subset=["review_ST"])
         return data_reviews_filtered
