@@ -1,0 +1,16 @@
+review,date,source,review_ST,label_sentiment
+It was the shock of my life when I was diagnosed with stage four cancer ,,,shock life diagnosed stage four cancer,surprise
+"At first I love it, now I hate it",12-05-2012,facebook,first love  hate,sadness
+I fucking love baquette,12-05-2022,twitter,fucking love baquette,anger
+💩,12-07-2012,google map,💩,neutral
+What' is this?,12-05-2022,facebook, this ?,surprise
+"The bread is amazing, it's always fresh and delicious!",12-07-2012,google map,bread amazing  always fresh delicious ,joy
+"I love the croissants, they're so flaky and buttery!",12-07-2012,facebook,love croissants  flaky buttery ,joy
+"The pastries are a bit too sweet for my taste, but still good.",12-07-2012,google map,pastries bit sweet taste  still good ,joy
+"The sandwiches are great, I love the variety of fillings.",12-07-2012,twitter,sandwiches great  love variety fillings ,joy
+"I'm not a fan of the bread, it's too dense for my liking.",12-07-2012,google map,not fan bread  dense liking ,anger
+"The cakes are beautiful and tasty, perfect for special occasions.",12-07-2012,facebook,cakes beautiful tasty  perfect special occasions ,joy
+"The service is friendly and fast, I always enjoy coming here.",12-07-2012,google map,service friendly fast  always enjoy coming ,joy
+"The prices are a bit high, but the quality is worth it.",12-07-2012,twitter,prices bit high  quality worth ,joy
+"I've had some issues with consistency in the past, but overall it's a good bakery.",12-07-2012,google map,issues consistency past  overall good bakery ,fear
+"The bread is always fresh, but I wish they had more gluten-free options.",12-07-2012,facebook,bread always fresh  wish gluten-free options ,joy

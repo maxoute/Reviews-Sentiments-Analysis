@@ -1,20 +1,13 @@
 import pandas as pd 
-# import nltk
-# nltk.download('punkt')
-# nltk.download('stopwords')
-# nltk.download('wordcloud')
-# nltk.download('vader_lexicon')
-# nltk.download('wordnet')
-
 from nltk.tokenize import word_tokenize
 from data_cleaning import clean_text
-from model import Emotion, Sentiment, Topic_extract
+from model import Emotion_model, Sentiment_model, Topic_model
 
 class Dataset_anotation():
     def __init__(self):
-        self.model_sentiment = Sentiment()
-        self.model_emotion = Emotion()
-        self.topic_extract = Topic_extract()
+        self.model_sentiment = Emotion_model()
+        self.model_emotion = Sentiment_model()
+        self.topic_extract = Topic_model()
 
     def read_csv(self, csv_path):
         self.data_reviews = pd.read_csv(csv_path)
@@ -43,58 +36,86 @@ class Dataset_anotation():
             self.data_reviews.at[i, "review_ST"] = " ".join(words)
 
         self.data_reviews['review_ST'] = self.data_reviews['review_ST'].apply(clean_text)
+        
         self.reviews_clean = self.data_reviews['review_ST']
         
+    
+    def return_probability(self, prediction, label):
+        for item in prediction[0]:
+            if item['label'] == label:
+                probability_score = item['score']
+        return probability_score
         
-    def annotation_sentiment(self, data_reviews = None,  csv_path = 'null' ):
-        
-        if csv_path=='null':
-            self.data_reviews = data_reviews
-        else:
-            self.read_csv(csv_path)
-            self.preprocessing_data()
+    def annotation_sentiment(self, probability = False):
         
         
         """ we are adding 4 more columns to the original dataset, 
         label sentiment, the proba of positive, negative and neutral then we are filling thooses columns"""
         
         self.data_reviews["label_sentiment"] = ""
-        self.data_reviews["negative_probability_sentiment"] = ""
-        self.data_reviews["neutral_probability_sentiment"] = ""
-        self.data_reviews["positive_probability_sentiment"] = ""
+        
+        if probability == True:
+            ### Not working Yet
+            self.data_reviews["negative_probability_sentiment"] = ""
+            self.data_reviews["neutral_probability_sentiment"] = ""
+            self.data_reviews["positive_probability_sentiment"] = ""
 
         for i, review in enumerate(self.reviews_clean):
-            prediction = self.model_sentiment.predict(review)
-            self.data_reviews.at[i, "label_sentiment"] = prediction["label"]
-            self.data_reviews.at[i, "negative_probability_sentiment"] = prediction["probability"]["negative"]
-            self.data_reviews.at[i, "neutral_probability_sentiment"] = prediction["probability"]["neutral"]
-            self.data_reviews.at[i, "positive_probability_sentiment"] = prediction["probability"]["positive"]
+            prediction , pred_proba = self.model_sentiment.predict(review)
+            self.data_reviews.at[i, "label_sentiment"] = prediction
             
-    def annotation_emotion(self, data_reviews = None,  csv_path = 'null' ):
+            if probability == True:
+                self.data_reviews.at[i, "negative_probability_sentiment"] = self.return_probability(pred_proba, 'negative')
+                self.data_reviews.at[i, "neutral_probability_sentiment"] = self.return_probability(pred_proba, 'neutral')
+                self.data_reviews.at[i, "positive_probability_sentiment"] = self.return_probability(pred_proba, 'positive')
+            
+    def annotation_emotion(self, probability = False):
+        
+        self.data_reviews["label_emotion"] = ""
+        
+        if probability == True:
+            ### notworking yet
+            self.data_reviews["joy_probability_emotion"] = ""
+            self.data_reviews["surprise_probability_emotion"] = ""
+            self.data_reviews["sadness_probability_emotion"] = ""
+            self.data_reviews["neutral_probability_emotion"] = ""
+            self.data_reviews["fear_probability_emotion"] = ""
+
+        for i, review in enumerate(self.reviews_clean):
+            prediction, pred_proba = self.model_emotion.predict(review)
+            self.data_reviews.at[i, "label_emotion"] = prediction
+            
+            if probability==True:
+                ### Not working yet
+                self.data_reviews.at[i, "joy_probability_emotion"] = self.return_probability(pred_proba, 'joy')
+                self.data_reviews.at[i, "surprise_probability_emotion"] = self.return_probability(pred_proba, 'surprise')
+                self.data_reviews.at[i, "anger_probability_emotion"] = self.return_probability(pred_proba, 'anger')
+                self.data_reviews.at[i, "sadness_probability_emotion"] = self.return_probability(pred_proba, 'sadness')
+                self.data_reviews.at[i, "neutral_probability_emotion"] = self.return_probability(pred_proba, 'neutral')
+                self.data_reviews.at[i, "disgust_probability_emotion"] = self.return_probability(pred_proba, 'disgust')
+                self.data_reviews.at[i, "fear_probability_emotion"] = self.return_probability(pred_proba, 'fear')
+             
+             
+                
+    def annotate(self, csv_path = 'null',data_reviews=None, annotation_sentiment = True, annotation_emotion = True,   probability = False):
         
         if csv_path=='null':
             self.data_reviews = data_reviews
         else:
             self.read_csv(csv_path)
             self.preprocessing_data()
-
-        self.data_reviews["label_emotion"] = ""
-        self.data_reviews["joy_probability_emotion"] = ""
-        self.data_reviews["surprise_probability_emotion"] = ""
-        self.data_reviews["sadness_probability_emotion"] = ""
-        self.data_reviews["neutral_probability_emotion"] = ""
-        self.data_reviews["fear_probability_emotion"] = ""
-
-        for i, review in enumerate(self.reviews_clean):
-            prediction = self.model_emotion.predict(review)
-            self.data_reviews.at[i, "label_emotion"] = prediction["label"]
-            self.data_reviews.at[i, "joy_probability_emotion"] = prediction["probability"]["joy"]
-            self.data_reviews.at[i, "surprise_probability_emotion"] = prediction["probability"]["surprise"]
-            self.data_reviews.at[i, "anger_probability_emotion"] = prediction["probability"]["anger"]
-            self.data_reviews.at[i, "sadness_probability_emotion"] = prediction["probability"]["sadness"]
-            self.data_reviews.at[i, "neutral_probability_emotion"] = prediction["probability"]["neutral"]
-            self.data_reviews.at[i, "disgust_probability_emotion"] = prediction["probability"]["disgust"]
-            self.data_reviews.at[i, "fear_probability_emotion"] = prediction["probability"]["fear"]
+        
+        if annotation_sentiment == True & annotation_emotion == True:
+            self.annotation_sentiment( probability=probability)
+            self.annotation_emotion()
+            
+        elif annotation_sentiment == True:
+            self.annotation_sentiment(probability=probability)
+            
+        elif annotation_emotion == True:
+            self.annotation_emotion(probability=probability)
+            
+        return self.data_reviews
 
     def write_dataframe_csv(self, dataframe, path):
         
