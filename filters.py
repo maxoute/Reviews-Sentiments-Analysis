@@ -13,12 +13,12 @@ class Filter_dataset():
         
     def filter(self, emotions, sentiments, sources, date ):
         
-        if emotions != True:
+        if not emotions:
             filter_emotion = self.dataframe['label_emotion'].isin(emotions)
         else:
             filter_emotion = emotions
 
-        if sentiments != True:
+        if not sentiments != True:
             filter_sentiment = self.dataframe['label_sentiment'].isin(sentiments)
         else:
             filter_sentiment = sentiments

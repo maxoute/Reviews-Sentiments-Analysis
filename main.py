@@ -58,20 +58,20 @@ dataset_anotator.write_dataframe_csv(dataset_filtered,"dataset-test/dataset_filt
 # dataset_anotator.write_dataframe_csv(neutral_reviews, "dataset-test/neutral_reviews.csv")
 # dataset_anotator.write_dataframe_csv(negative_reviews, "dataset-test/negative_reviews.csv")
 
-# data_reviews = dataset_anotator.data_reviews
+data_reviews = dataset_anotator.data_reviews
 
-# common_words = common_words_extract.common_words_counter(data_reviews)
+common_words = common_words_extract.common_words_counter(data_reviews)
 
-# print('common_words',common_words)
+print('common_words',common_words)
 
-# test, text = synonym_extractor.find_synonyms_dataset(data_reviews)
-
-
-
-# print('text :\n', text)
-# test = synonym_extractor.return_synonym_one_word(str('computer'))
+test, text = synonym_extractor.find_synonyms_dataset(data_reviews)
 
 
-# print(test)
 
-# print('data_reviews.columns', data_reviews.columns)
+print('text :\n', text)
+test = synonym_extractor.return_synonym_one_word(str('computer'))
+
+
+print(test)
+
+print('data_reviews.columns', data_reviews.columns)
